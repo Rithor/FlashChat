@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D2FEC122387E66D002FE3B2 /* AuthorizationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FEC112387E66D002FE3B2 /* AuthorizationVC.swift */; };
+		1D2FEC142387E67F002FE3B2 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FEC132387E67F002FE3B2 /* ChatVC.swift */; };
 		1DB1B2932382B302007B24B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB1B2922382B302007B24B6 /* AppDelegate.swift */; };
 		1DB1B2952382B302007B24B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB1B2942382B302007B24B6 /* SceneDelegate.swift */; };
 		1DB1B29A2382B302007B24B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DB1B2982382B302007B24B6 /* Main.storyboard */; };
 		1DB1B29C2382B305007B24B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DB1B29B2382B305007B24B6 /* Assets.xcassets */; };
 		1DB1B29F2382B305007B24B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DB1B29D2382B305007B24B6 /* LaunchScreen.storyboard */; };
-		1DB1B2A82382B379007B24B6 /* LaunchScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB1B2A72382B379007B24B6 /* LaunchScreenVC.swift */; };
+		1DB1B2A82382B379007B24B6 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB1B2A72382B379007B24B6 /* WelcomeVC.swift */; };
 		1DB1B2AC2382B3FB007B24B6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1DB1B2AB2382B3FB007B24B6 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D2FEC112387E66D002FE3B2 /* AuthorizationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationVC.swift; sourceTree = "<group>"; };
+		1D2FEC132387E67F002FE3B2 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		1DB1B28F2382B302007B24B6 /* FlashChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DB1B2922382B302007B24B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1DB1B2942382B302007B24B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,7 +28,7 @@
 		1DB1B29B2382B305007B24B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1DB1B29E2382B305007B24B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1DB1B2A02382B305007B24B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1DB1B2A72382B379007B24B6 /* LaunchScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenVC.swift; sourceTree = "<group>"; };
+		1DB1B2A72382B379007B24B6 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		1DB1B2AB2382B3FB007B24B6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,7 +83,9 @@
 		1DB1B2A92382B37D007B24B6 /* Controler */ = {
 			isa = PBXGroup;
 			children = (
-				1DB1B2A72382B379007B24B6 /* LaunchScreenVC.swift */,
+				1DB1B2A72382B379007B24B6 /* WelcomeVC.swift */,
+				1D2FEC112387E66D002FE3B2 /* AuthorizationVC.swift */,
+				1D2FEC132387E67F002FE3B2 /* ChatVC.swift */,
 			);
 			path = Controler;
 			sourceTree = "<group>";
@@ -168,7 +174,9 @@
 			files = (
 				1DB1B2932382B302007B24B6 /* AppDelegate.swift in Sources */,
 				1DB1B2952382B302007B24B6 /* SceneDelegate.swift in Sources */,
-				1DB1B2A82382B379007B24B6 /* LaunchScreenVC.swift in Sources */,
+				1D2FEC122387E66D002FE3B2 /* AuthorizationVC.swift in Sources */,
+				1DB1B2A82382B379007B24B6 /* WelcomeVC.swift in Sources */,
+				1D2FEC142387E67F002FE3B2 /* ChatVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

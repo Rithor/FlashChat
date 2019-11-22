@@ -1,14 +1,14 @@
 //
-//  LaunchScreenVC.swift
+//  ChatVC.swift
 //  FlashChat
 //
-//  Created by Vitalii on 18.11.2019.
+//  Created by Vitalii on 22.11.2019.
 //  Copyright © 2019 Vitalii Andrianov. All rights reserved.
 //
 
 import UIKit
 
-class LaunchScreenVC: UIViewController {
+class ChatVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
