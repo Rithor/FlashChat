@@ -8,14 +8,12 @@
 
 import UIKit
 
-
 class WelcomeVC: UIViewController {
     
     //MARK: - Properties
-    
-    @IBOutlet weak var logoLabel: UILabel!
-    @IBOutlet weak var logInButton: UIButton!
-    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet private weak var logoLabel: UILabel!
+    @IBOutlet private weak var logInButton: UIButton!
+    @IBOutlet private weak var registerButton: UIButton!
     
     //MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -27,16 +25,7 @@ class WelcomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithOpaqueBackground()
-        navBarAppearance.backgroundColor = UIColor.clear
-        navBarAppearance.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title2)
-        ]
-        navigationController?.navigationBar.standardAppearance = navBarAppearance
-        navigationController?.navigationBar.isHidden = true
+        setupAppearanceNavBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,17 +46,17 @@ class WelcomeVC: UIViewController {
     //MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let authVC = segue.destination as? AuthorizationVC else { return }
+        
         switch segue.identifier {
         case Constant.Segue.showLogInVCIdentifire:
-            authVC.authButtonTitle = "LogIn"
+            authVC.authButtonTitle = "Log In"
             authVC.viewColor = (sender as! UIButton).backgroundColor
             authVC.isNewUser = false
         case Constant.Segue.showRegisterVCIdentifire:
             authVC.authButtonTitle = "Register"
             authVC.viewColor = (sender as! UIButton).backgroundColor
             authVC.isNewUser = true
-        default:
-            break
+        default: break
         }
     }
     
@@ -92,4 +81,17 @@ class WelcomeVC: UIViewController {
             })
         }
     }
+    
+    private func setupAppearanceNavBar() {
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = UIColor.clear
+        navBarAppearance.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title2)
+        ]
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.isHidden = true
+    }
+    
 }

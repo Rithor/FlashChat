@@ -17,12 +17,11 @@
 		1DA119B0238AA42600F4CA5C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA119AF238AA42600F4CA5C /* Constant.swift */; };
 		1DB1B2932382B302007B24B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB1B2922382B302007B24B6 /* AppDelegate.swift */; };
 		1DB1B2952382B302007B24B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB1B2942382B302007B24B6 /* SceneDelegate.swift */; };
-		1DB1B29A2382B302007B24B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DB1B2982382B302007B24B6 /* Main.storyboard */; };
 		1DB1B29C2382B305007B24B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DB1B29B2382B305007B24B6 /* Assets.xcassets */; };
 		1DB1B29F2382B305007B24B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DB1B29D2382B305007B24B6 /* LaunchScreen.storyboard */; };
 		1DB1B2A82382B379007B24B6 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB1B2A72382B379007B24B6 /* WelcomeVC.swift */; };
 		1DB1B2AC2382B3FB007B24B6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1DB1B2AB2382B3FB007B24B6 /* .gitignore */; };
-		1DB3C9EC238D067800B869D8 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB3C9EB238D067800B869D8 /* Validation.swift */; };
+		1DB3C9EE238D4D0A00B869D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DB3C9ED238D4D0A00B869D8 /* Main.storyboard */; };
 		376167AD25397ED9F3718801 /* Pods_FlashChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1BE2A1AEF13054FD23A8F3 /* Pods_FlashChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,13 +37,12 @@
 		1DB1B28F2382B302007B24B6 /* FlashChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DB1B2922382B302007B24B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1DB1B2942382B302007B24B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1DB1B2992382B302007B24B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1DB1B29B2382B305007B24B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1DB1B29E2382B305007B24B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1DB1B2A02382B305007B24B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DB1B2A72382B379007B24B6 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		1DB1B2AB2382B3FB007B24B6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		1DB3C9EB238D067800B869D8 /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		1DB3C9ED238D4D0A00B869D8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		2AEB488DB23E6520D115CB00 /* Pods-FlashChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashChat.debug.xcconfig"; path = "Target Support Files/Pods-FlashChat/Pods-FlashChat.debug.xcconfig"; sourceTree = "<group>"; };
 		3A1BE2A1AEF13054FD23A8F3 /* Pods_FlashChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlashChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ADBDAF908DA4312213B821A /* Pods-FlashChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashChat.release.xcconfig"; path = "Target Support Files/Pods-FlashChat/Pods-FlashChat.release.xcconfig"; sourceTree = "<group>"; };
@@ -106,7 +104,7 @@
 			children = (
 				1D5AC8E3238961EA001B61A1 /* MessageCell.swift */,
 				1D5AC8E4238961EA001B61A1 /* MessageCell.xib */,
-				1DB1B2982382B302007B24B6 /* Main.storyboard */,
+				1DB3C9ED238D4D0A00B869D8 /* Main.storyboard */,
 				1DB1B29D2382B305007B24B6 /* LaunchScreen.storyboard */,
 			);
 			path = View;
@@ -126,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				1D5AC8E1238943BF001B61A1 /* CommonFunc.swift */,
-				1DB3C9EB238D067800B869D8 /* Validation.swift */,
 				1DA119AF238AA42600F4CA5C /* Constant.swift */,
 				1DB1B29B2382B305007B24B6 /* Assets.xcassets */,
 				1D5AC8DF238941B0001B61A1 /* GoogleService-Info.plist */,
@@ -216,9 +213,9 @@
 				1DB1B2AC2382B3FB007B24B6 /* .gitignore in Resources */,
 				1D5AC8E6238961EA001B61A1 /* MessageCell.xib in Resources */,
 				1DB1B29F2382B305007B24B6 /* LaunchScreen.storyboard in Resources */,
+				1DB3C9EE238D4D0A00B869D8 /* Main.storyboard in Resources */,
 				1D5AC8E0238941B1001B61A1 /* GoogleService-Info.plist in Resources */,
 				1DB1B29C2382B305007B24B6 /* Assets.xcassets in Resources */,
-				1DB1B29A2382B302007B24B6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,7 +276,6 @@
 				1D5AC8E2238943BF001B61A1 /* CommonFunc.swift in Sources */,
 				1D5AC8EB238966A7001B61A1 /* Message.swift in Sources */,
 				1D2FEC142387E67F002FE3B2 /* ChatVC.swift in Sources */,
-				1DB3C9EC238D067800B869D8 /* Validation.swift in Sources */,
 				1D5AC8E5238961EA001B61A1 /* MessageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,14 +283,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1DB1B2982382B302007B24B6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DB1B2992382B302007B24B6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1DB1B29D2382B305007B24B6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

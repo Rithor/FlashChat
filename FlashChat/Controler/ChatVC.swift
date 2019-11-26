@@ -13,13 +13,16 @@ class ChatVC: UIViewController {
     
     //MARK: - Properties
     let db = Firestore.firestore()
-    var messagesArray = [Message]()
-    var dbListener: ListenerRegistration?
-    var keyboardHeight: CGFloat = 0.0
+    fileprivate var messagesArray = [Message]()
+    private var dbListener: ListenerRegistration?
+    private var keyboardHeight: CGFloat = 0.0
+    private var isFirstLoad = true
 
-    @IBOutlet weak var bottomInputMessageViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var messagesTableView: UITableView!
-    @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet private weak var bottomInputMessageViewConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var messageTextFieldHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var bottomViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var messagesTableView: UITableView!
+    @IBOutlet private weak var messageTextField: UITextField!
     
     //MARK: - View lifecycle
     override func viewDidLoad() {
@@ -27,12 +30,12 @@ class ChatVC: UIViewController {
         
         navigationItem.hidesBackButton = true
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
-        messagesTableView.addGestureRecognizer(tapGesture)
-        
         messagesTableView.separatorStyle = .none
         messagesTableView.register(UINib(nibName: "MessageCell", bundle: nil),
                                    forCellReuseIdentifier: Constant.messageCellIdentifire)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
+        messagesTableView.addGestureRecognizer(tapGesture)
         
         loadMessages()
     }
@@ -40,14 +43,15 @@ class ChatVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillAppear),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillDisappear),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self,
+                       selector: #selector(keyboardWillAppear),
+                       name: UIResponder.keyboardWillShowNotification,
+                       object: nil)
+        nc.addObserver(self,
+                       selector: #selector(keyboardWillDisappear),
+                       name: UIResponder.keyboardWillHideNotification,
+                       object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -58,17 +62,17 @@ class ChatVC: UIViewController {
     }
     
     //MARK: - IBActions
-    @IBAction func actionLogOutBButton(_ sender: UIBarButtonItem) {
+    @IBAction private func actionLogOutBButton(_ sender: UIBarButtonItem) {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
             navigationController?.popToRootViewController(animated: true)
         } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
+            CommonFunc.showAlertWith(message: signOutError.localizedDescription, sender: self)
         }
     }
     
-    @IBAction func actionSendButton(_ sender: UIButton) {
+    @IBAction private func actionSendButton(_ sender: UIButton) {
         sendMessage()
     }
     
@@ -79,7 +83,10 @@ class ChatVC: UIViewController {
             .order(by: Constant.FBase.dateFeild)
             .addSnapshotListener { (querySnapshot, error) in
             if let getDocError = error {
-                print("Error: Get Data from Firestore. \(getDocError.localizedDescription). \(getDocError)")
+                //TODO: load offline data
+                CommonFunc.showAlertWith(
+                    message: "Check your internet connection.\n\(getDocError.localizedDescription)",
+                    sender: self)
             } else {
                 guard let snapshotDocs = querySnapshot?.documentChanges else { return }
                 for doc in snapshotDocs {
@@ -93,20 +100,21 @@ class ChatVC: UIViewController {
         }
     }
     
-    fileprivate func sendMessage() {
-        if let messageBody = messageTextField.text, let messageSender = Auth.auth().currentUser?.email, Validation.isValidateString(messageBody) {
+    private func sendMessage() {
+        if let messageBody = messageTextField.text, let messageSender = Auth.auth().currentUser?.email, CommonFunc.isValidateString(messageBody) {
             db.collection(Constant.FBase.collectionName).addDocument(data: [
                 Constant.FBase.senderField: messageSender,
                 Constant.FBase.bodyField: messageBody,
                 Constant.FBase.dateFeild: Date().timeIntervalSince1970
             ]) { (error) in
                 if let addDocError = error {
-                    print("Error: Add data to FireBase collection. \(addDocError). \(addDocError.localizedDescription)")
+                    CommonFunc.showAlertWith(
+                    message: "Message wasn't send.\n\(addDocError.localizedDescription)",
+                    sender: self)
                 } else {
                     DispatchQueue.main.async {
                         self.messageTextField.text = ""
                     }
-                    print("Add data successful")
                 }
             }
         }
@@ -128,11 +136,12 @@ class ChatVC: UIViewController {
     
     private func scrollChatToDown() {
         guard messagesArray.count > 1 else { return }
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.messagesTableView.reloadData()
             self.messagesTableView.scrollToRow(at: IndexPath(row: self.messagesArray.count - 1, section: 0),
                                               at: .top,
-                                              animated: true)
+                                              animated: !self.isFirstLoad)
+            self.isFirstLoad = false
         }
     }
     
@@ -150,6 +159,7 @@ class ChatVC: UIViewController {
     
     @objc private func keyboardWillDisappear(_ notification: Notification) {
         updateInputTextView(isKeybordShow: false)
+        messagesTableView.reloadData()
     }
     
     //MARK: - GestureRecognizer func

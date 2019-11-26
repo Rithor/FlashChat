@@ -6,13 +6,14 @@
 //  Copyright © 2019 Vitalii Andrianov. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Constant {
     
     static let appName = "FlashChat"
     static let appNameWithLogo = "⚡️FlashChat"
     static let appLogo = "⚡️"
+    static let messageCornerRadius: CGFloat = 5.0
     
     static let messageCellIdentifire = "messageCell"
     

@@ -17,4 +17,9 @@ struct CommonFunc {
         sender.present(alert, animated: true, completion: nil)
     }
     
+    //name isn't empty and isn't be white space only
+    static func isValidateString(_ testString: String) -> Bool {
+        return testString.rangeOfCharacter(from: .alphanumerics) == nil ? false : true
+    }
+    
 }

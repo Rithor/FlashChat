@@ -19,14 +19,9 @@ class MessageCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        messageView.layer.cornerRadius = 10
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        messageView.layer.cornerRadius = messageView.frame.height / 3
+        leftAvatarView.layer.cornerRadius = leftAvatarView.frame.height / 2
+        rightAvaterView.layer.cornerRadius = rightAvaterView.frame.height / 2
     }
     
 }

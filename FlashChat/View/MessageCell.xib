@@ -38,11 +38,6 @@
                                     <constraint firstItem="cfI-nH-hmc" firstAttribute="leading" secondItem="FnK-50-aZ9" secondAttribute="leading" id="M52-RU-wa4"/>
                                     <constraint firstAttribute="height" constant="40" id="ajf-Zb-lXG"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ycF-pp-f69">
                                 <rect key="frame" x="50" y="0.0" width="439" height="50"/>
@@ -81,11 +76,6 @@
                                     <constraint firstAttribute="trailing" secondItem="ZcS-86-4Id" secondAttribute="trailing" id="Sxz-D7-BZL"/>
                                     <constraint firstAttribute="width" constant="40" id="ebl-zC-Rny"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                     </stackView>
