@@ -17,6 +17,11 @@ struct Constant {
     
     static let messageCellIdentifire = "messageCell"
     
+    struct Color {
+        static let brandMintDarkColor = UIColor.init(named: "brandMintDark")
+        static let brandMintLightColor = UIColor.init(named: "brandMintLight")
+    }
+    
     struct Segue {
         static let showLogInVCIdentifire = "showLogInVC"
         static let showRegisterVCIdentifire = "showRegisterVC"
@@ -28,6 +33,11 @@ struct Constant {
         static let bodyField = "body"
         static let senderField = "sender"
         static let dateFeild = "date"
+    }
+    
+    struct Constraint {
+        static let defaultBottomViewHeight: CGFloat = 60.0
+        static let defaultTextViewHeight: CGFloat = 38.0
     }
     
 }

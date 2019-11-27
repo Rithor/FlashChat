@@ -24,7 +24,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mjl-tv-mKn">
                                 <rect key="frame" x="0.0" y="728" width="375" height="50"/>
-                                <color key="backgroundColor" name="BrandBlue"/>
+                                <color key="backgroundColor" name="brandBlueDark"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="OR7-Al-hq3"/>
                                 </constraints>
@@ -37,7 +37,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XKG-0p-hGz">
                                 <rect key="frame" x="0.0" y="678" width="375" height="50"/>
-                                <color key="backgroundColor" red="0.18198148906230927" green="0.69426733255386353" blue="0.53024792671203613" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="brandMintLight"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="2sZ-qv-fkP"/>
                                     <constraint firstAttribute="height" constant="50" id="lt5-6q-A3M"/>
@@ -50,7 +50,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.19376453760000001" green="0.50850099329999998" blue="0.85232251879999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="brandBlue"/>
                         <constraints>
                             <constraint firstItem="mjl-tv-mKn" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="8Oh-dR-qIu"/>
                             <constraint firstItem="mjl-tv-mKn" firstAttribute="top" secondItem="XKG-0p-hGz" secondAttribute="bottom" id="9SP-EF-Vns"/>
@@ -155,7 +155,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="lpc-oB-AW6" firstAttribute="top" secondItem="dlD-Zs-j0S" secondAttribute="bottom" id="DJM-Mq-R0q"/>
                             <constraint firstItem="tT0-5p-Qeg" firstAttribute="top" secondItem="yed-Eh-gKh" secondAttribute="top" constant="30" id="V4w-2k-b0q"/>
@@ -193,30 +193,32 @@
                                 <rect key="frame" x="0.0" y="718" width="375" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rUe-bZ-XsH">
-                                        <rect key="frame" x="10" y="10" width="355" height="35"/>
+                                        <rect key="frame" x="10" y="10" width="355" height="38"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Write a message" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5ng-xy-cSD">
-                                                <rect key="frame" x="0.0" y="0.0" width="310" height="34"/>
-                                                <color key="tintColor" red="0.19376453760000001" green="0.50850099329999998" blue="0.85232251879999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="EkQ-HL-97j">
+                                                <rect key="frame" x="0.0" y="0.0" width="307" height="38"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="tintColor" name="brandBlue"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="AsX-wF-7ds"/>
+                                                    <constraint firstAttribute="height" constant="38" id="sZS-yf-Lsq"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send"/>
                                                 <connections>
-                                                    <outlet property="delegate" destination="B11-vy-xus" id="JYx-CQ-NtV"/>
+                                                    <outlet property="delegate" destination="B11-vy-xus" id="O9a-iu-H0C"/>
                                                 </connections>
-                                            </textField>
+                                            </textView>
                                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXR-Wa-2VA">
-                                                <rect key="frame" x="320" y="0.0" width="35" height="35"/>
+                                                <rect key="frame" x="317" y="0.0" width="38" height="38"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="35" id="81O-N3-gue"/>
-                                                    <constraint firstAttribute="height" constant="35" id="gzI-kF-DzB"/>
+                                                    <constraint firstAttribute="width" constant="38" id="81O-N3-gue"/>
+                                                    <constraint firstAttribute="height" constant="38" id="gzI-kF-DzB"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="arrowtriangle.up.circle.fill" catalog="system">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24" scale="large" weight="medium"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="38" scale="large" weight="medium"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="actionSendButton:" destination="B11-vy-xus" eventType="touchUpInside" id="eRy-Kn-G2K"/>
@@ -225,7 +227,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.19376453760000001" green="0.50850099329999998" blue="0.85232251879999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="brandBlue"/>
                                 <constraints>
                                     <constraint firstItem="rUe-bZ-XsH" firstAttribute="top" secondItem="OwQ-la-nAc" secondAttribute="top" constant="10" id="0Az-i8-MJo"/>
                                     <constraint firstAttribute="trailing" secondItem="rUe-bZ-XsH" secondAttribute="trailing" constant="10" id="Ew6-e7-PkE"/>
@@ -242,7 +244,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.19376453760000001" green="0.50850099329999998" blue="0.85232251879999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="brandBlue"/>
                         <constraints>
                             <constraint firstItem="2u2-M1-QmC" firstAttribute="trailing" secondItem="GHH-MB-d1d" secondAttribute="trailing" id="1tF-fB-OFt"/>
                             <constraint firstItem="OwQ-la-nAc" firstAttribute="trailing" secondItem="GHH-MB-d1d" secondAttribute="trailing" id="CdD-Eh-eI9"/>
@@ -264,14 +266,14 @@
                     <connections>
                         <outlet property="bottomInputMessageViewConstraint" destination="iKl-J4-dT4" id="9py-L2-MZw"/>
                         <outlet property="bottomViewHeightConstraint" destination="wAT-qt-siU" id="gjj-lI-8wr"/>
-                        <outlet property="messageTextField" destination="5ng-xy-cSD" id="yWS-xI-fm5"/>
-                        <outlet property="messageTextFieldHeightConstraint" destination="AsX-wF-7ds" id="Ggh-4d-3Dh"/>
+                        <outlet property="messageTextView" destination="EkQ-HL-97j" id="yar-Qm-35S"/>
+                        <outlet property="messageTextViewHeightConstraint" destination="sZS-yf-Lsq" id="JTT-vL-Mpg"/>
                         <outlet property="messagesTableView" destination="2u2-M1-QmC" id="jPZ-mO-7HM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kBr-e9-g2A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2730.434782608696" y="137.94642857142856"/>
+            <point key="canvasLocation" x="2730.4000000000001" y="137.4384236453202"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eCN-0c-eja">
@@ -299,8 +301,14 @@
     <resources>
         <image name="arrowtriangle.up.circle.fill" catalog="system" width="64" height="60"/>
         <image name="customTextField" width="298" height="93"/>
-        <namedColor name="BrandBlue">
-            <color red="0.16500000655651093" green="0.77999997138977051" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="brandBlue">
+            <color red="0.33700001239776611" green="0.57999998331069946" blue="0.8399999737739563" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="brandBlueDark">
+            <color red="0.15399999916553497" green="0.41299998760223389" blue="0.69099998474121094" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="brandMintLight">
+            <color red="0.18199999630451202" green="0.6940000057220459" blue="0.52999997138977051" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>

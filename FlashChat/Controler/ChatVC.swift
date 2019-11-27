@@ -13,22 +13,25 @@ class ChatVC: UIViewController {
     
     //MARK: - Properties
     let db = Firestore.firestore()
-    fileprivate var messagesArray = [Message]()
+    private var messagesArray = [Message]()
     private var dbListener: ListenerRegistration?
     private var keyboardHeight: CGFloat = 0.0
     private var isFirstLoad = true
-
+    
     @IBOutlet private weak var bottomInputMessageViewConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var messageTextFieldHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var bottomViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var messageTextViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var messagesTableView: UITableView!
-    @IBOutlet private weak var messageTextField: UITextField!
+    @IBOutlet private weak var messageTextView: UITextView!
     
     //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.hidesBackButton = true
+        
+        messageTextView.layer.cornerRadius = 5
+        messageTextView.isScrollEnabled = false
         
         messagesTableView.separatorStyle = .none
         messagesTableView.register(UINib(nibName: "MessageCell", bundle: nil),
@@ -82,26 +85,31 @@ class ChatVC: UIViewController {
         dbListener = db.collection(Constant.FBase.collectionName)
             .order(by: Constant.FBase.dateFeild)
             .addSnapshotListener { (querySnapshot, error) in
-            if let getDocError = error {
-                //TODO: load offline data
-                CommonFunc.showAlertWith(
-                    message: "Check your internet connection.\n\(getDocError.localizedDescription)",
-                    sender: self)
-            } else {
-                guard let snapshotDocs = querySnapshot?.documentChanges else { return }
-                for doc in snapshotDocs {
-                    let message = doc.document.data()
-                    if let messageSender = message[Constant.FBase.senderField] as? String, let messageBody = message[Constant.FBase.bodyField] as? String {
-                        self.messagesArray.append(Message(body: messageBody, sender: messageSender))
-                        self.scrollChatToDown()
+                if let getDocError = error {
+                    //TODO: load offline data
+                    if Auth.auth().currentUser != nil {
+                        CommonFunc.showAlertWith(
+                            message: "Check your internet connection.\n\(getDocError.localizedDescription)",
+                            sender: self)
+                    }
+                } else {
+                    guard let snapshotDocs = querySnapshot?.documentChanges else { return }
+                    for doc in snapshotDocs {
+                        let message = doc.document.data()
+                        if let messageSender = message[Constant.FBase.senderField] as? String, let messageBody = message[Constant.FBase.bodyField] as? String {
+                            self.messagesArray.append(Message(body: messageBody, sender: messageSender))
+                            self.scrollChatToDown()
+                        }
                     }
                 }
-            }
         }
     }
     
     private func sendMessage() {
-        if let messageBody = messageTextField.text, let messageSender = Auth.auth().currentUser?.email, CommonFunc.isValidateString(messageBody) {
+        if let messageBody = messageTextView.text,
+            let messageSender = Auth.auth().currentUser?.email,
+            CommonFunc.isValidateString(messageBody) {
+            
             db.collection(Constant.FBase.collectionName).addDocument(data: [
                 Constant.FBase.senderField: messageSender,
                 Constant.FBase.bodyField: messageBody,
@@ -109,11 +117,16 @@ class ChatVC: UIViewController {
             ]) { (error) in
                 if let addDocError = error {
                     CommonFunc.showAlertWith(
-                    message: "Message wasn't send.\n\(addDocError.localizedDescription)",
-                    sender: self)
+                        message: "Message wasn't send.\n\(addDocError.localizedDescription)",
+                        sender: self)
                 } else {
                     DispatchQueue.main.async {
-                        self.messageTextField.text = ""
+                        self.messageTextView.text = ""
+                        UIView.animate(withDuration: 0.2) {
+                            self.bottomViewHeightConstraint.constant = Constant.Constraint.defaultBottomViewHeight
+                            self.messageTextViewHeightConstraint.constant = Constant.Constraint.defaultTextViewHeight
+                            self.view.layoutIfNeeded()
+                        }
                     }
                 }
             }
@@ -124,23 +137,23 @@ class ChatVC: UIViewController {
         let offset = bottomInputMessageViewConstraint.constant > 0 ? 0.0 : keyboardHeight
         if isKeybordShow {
             bottomInputMessageViewConstraint.constant += offset
-            view.layoutIfNeeded()
             if offset != 0 {
                 scrollChatToDown()
             }
         } else {
             bottomInputMessageViewConstraint.constant -= keyboardHeight
-            view.layoutIfNeeded()
         }
+        view.layoutIfNeeded()
     }
     
     private func scrollChatToDown() {
         guard messagesArray.count > 1 else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
             self.messagesTableView.reloadData()
-            self.messagesTableView.scrollToRow(at: IndexPath(row: self.messagesArray.count - 1, section: 0),
-                                              at: .top,
-                                              animated: !self.isFirstLoad)
+            let lastIndex = IndexPath(row: self.messagesArray.count - 1, section: 0)
+            self.messagesTableView.scrollToRow(at: lastIndex,
+                                               at: .top,
+                                               animated: !self.isFirstLoad)
             self.isFirstLoad = false
         }
     }
@@ -164,13 +177,14 @@ class ChatVC: UIViewController {
     
     //MARK: - GestureRecognizer func
     @objc private func tableViewTapped() {
-        messageTextField.resignFirstResponder()
+        messageTextView.resignFirstResponder()
     }
     
 }
 
 //MARK: - UITableViewDataSource
 extension ChatVC: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messagesArray.count
     }
@@ -183,13 +197,13 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource {
         if message.sender == Auth.auth().currentUser?.email {
             safeCell.leftAvatarView.isHidden = true
             safeCell.rightAvaterView.isHidden = false
-            safeCell.messageLabel.textColor = #colorLiteral(red: 0.2389388382, green: 0.5892125368, blue: 0.8818323016, alpha: 1)
-            safeCell.messageView.backgroundColor = #colorLiteral(red: 0.2389388382, green: 0.5892125368, blue: 0.8818323016, alpha: 1).withAlphaComponent(0.1)
+            safeCell.messageLabel.textColor = Constant.Color.brandMintDarkColor
+            safeCell.messageView.backgroundColor = Constant.Color.brandMintDarkColor?.withAlphaComponent(0.1)
         } else {
             //appearance for another users
             safeCell.leftAvatarView.isHidden = false
             safeCell.rightAvaterView.isHidden = true
-            safeCell.messageView.backgroundColor = #colorLiteral(red: 0.2389388382, green: 0.5892125368, blue: 0.8818323016, alpha: 1)
+            safeCell.messageView.backgroundColor = Constant.Color.brandMintDarkColor
             safeCell.messageLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             let userName = message.sender
             let endIndex = userName.index(userName.startIndex, offsetBy: 2)
@@ -202,11 +216,25 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-//MARK: - UITextFieldDelegate
-extension ChatVC: UITextFieldDelegate {
+//MARK: - UITextViewDelegate
+extension ChatVC: UITextViewDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        sendMessage()
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimateSize = textView.sizeThatFits(size)
+        let oldState = bottomViewHeightConstraint.constant - messageTextViewHeightConstraint.constant
+        messageTextViewHeightConstraint.constant = estimateSize.height
+        let newState = bottomViewHeightConstraint.constant - messageTextViewHeightConstraint.constant
+        if oldState != newState {
+            bottomViewHeightConstraint.constant += oldState
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            sendMessage()
+            return false
+        }
         return true
     }
     

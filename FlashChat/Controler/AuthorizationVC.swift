@@ -17,8 +17,8 @@ class AuthorizationVC: UIViewController {
     var isNewUser: Bool?
     
     @IBOutlet private weak var emailTextField: UITextField!
+    @IBOutlet private weak var passwordTextFeild: UITextField!
     @IBOutlet private weak var authButton: UIButton!
-    @IBOutlet fileprivate weak var passwordTextFeild: UITextField!
     
     //MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -29,7 +29,7 @@ class AuthorizationVC: UIViewController {
     }
     
     //MARK: - IBActions
-    @IBAction fileprivate func actionAuthButton(_ sender: Any) {
+    @IBAction private func actionAuthButton(_ sender: Any) {
         guard let userEmail = emailTextField.text,
             let userPassword = passwordTextFeild.text,
             let isNewUser = isNewUser else { return }

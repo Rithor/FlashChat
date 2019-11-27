@@ -3,21 +3,22 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="messageCell" rowHeight="170" id="KGk-i7-Jjw" customClass="MessageCell" customModule="FlashChat" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="559" height="170"/>
+        <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="messageCell" rowHeight="69" id="KGk-i7-Jjw" customClass="MessageCell" customModule="FlashChat" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="420" height="69"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="559" height="170"/>
+                <rect key="frame" x="0.0" y="0.0" width="420" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xvj-Fr-ykx">
-                        <rect key="frame" x="10" y="10" width="539" height="150"/>
+                        <rect key="frame" x="10" y="10" width="400" height="49"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FnK-50-aZ9">
                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -29,7 +30,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="brandMintLight"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="cfI-nH-hmc" secondAttribute="trailing" id="0da-hm-DWW"/>
                                     <constraint firstAttribute="bottom" secondItem="cfI-nH-hmc" secondAttribute="bottom" id="6LW-oQ-YLE"/>
@@ -40,16 +41,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ycF-pp-f69">
-                                <rect key="frame" x="50" y="0.0" width="439" height="50"/>
+                                <rect key="frame" x="50" y="0.0" width="300" height="49"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBz-gF-yHY">
-                                        <rect key="frame" x="10" y="10" width="419" height="30"/>
+                                        <rect key="frame" x="10" y="10" width="280" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.19376453760000001" green="0.50850099329999998" blue="0.85232251879999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="brandMintDark"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="NBz-gF-yHY" secondAttribute="bottom" constant="10" id="2SL-yC-CdJ"/>
                                     <constraint firstItem="NBz-gF-yHY" firstAttribute="leading" secondItem="ycF-pp-f69" secondAttribute="leading" constant="10" id="5U8-JO-hpq"/>
@@ -58,7 +59,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GTP-Em-PHc">
-                                <rect key="frame" x="499" y="0.0" width="40" height="40"/>
+                                <rect key="frame" x="360" y="0.0" width="40" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcS-86-4Id">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -67,7 +68,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="brandMintLight"/>
                                 <constraints>
                                     <constraint firstItem="ZcS-86-4Id" firstAttribute="top" secondItem="GTP-Em-PHc" secondAttribute="top" id="9od-8U-hiJ"/>
                                     <constraint firstAttribute="bottom" secondItem="ZcS-86-4Id" secondAttribute="bottom" id="M2P-Xd-DRg"/>
@@ -95,7 +96,15 @@
                 <outlet property="messageView" destination="ycF-pp-f69" id="JW3-SF-V9x"/>
                 <outlet property="rightAvaterView" destination="GTP-Em-PHc" id="uGj-JZ-mu3"/>
             </connections>
-            <point key="canvasLocation" x="303.62318840579712" y="167.41071428571428"/>
+            <point key="canvasLocation" x="202.89855072463769" y="133.59375"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <namedColor name="brandMintDark">
+            <color red="0.15101002156734467" green="0.56891876459121704" blue="0.43715286254882812" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="brandMintLight">
+            <color red="0.18198148906230927" green="0.69426733255386353" blue="0.53024792671203613" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
 </document>
