@@ -30,11 +30,14 @@ class MessageCell: UITableViewCell {
         self.messageView.backgroundColor = Constant.Color.brandMintDarkColor?.withAlphaComponent(0.1)
     }
     
-    func configureForAnotherUser() {
+    func configureForAnotherUser(name: String) {
         self.leftAvatarView.isHidden = false
         self.rightAvaterView.isHidden = true
         self.messageView.backgroundColor = Constant.Color.brandMintDarkColor
         self.messageLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        let endIndex = name.index(name.startIndex, offsetBy: 2)
+        let avatarString = name[name.startIndex...endIndex]
+        self.leftAvatarLabel.text = avatarString.capitalized
     }
     
 }

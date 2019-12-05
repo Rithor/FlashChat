@@ -41,7 +41,7 @@ class AuthorizationVC: UIViewController {
         }
     }
     
-    //MARK: - Auxiliary Methods
+    //MARK: - Users authorization
     private func createNewUser(with userEmail: String, _ userPassword: String) {
         networkServise.createNewUser(with: userEmail, userPassword) { (user, error) in
             if let regError = error {

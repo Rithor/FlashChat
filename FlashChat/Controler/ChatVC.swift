@@ -46,14 +46,8 @@ class ChatVC: UIViewController {
         super.viewWillAppear(animated)
         
         let nc = NotificationCenter.default
-        nc.addObserver(self,
-                       selector: #selector(keyboardWillAppear),
-                       name: UIResponder.keyboardWillShowNotification,
-                       object: nil)
-        nc.addObserver(self,
-                       selector: #selector(keyboardWillDisappear),
-                       name: UIResponder.keyboardWillHideNotification,
-                       object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -78,7 +72,7 @@ class ChatVC: UIViewController {
         sendMessage()
     }
     
-    //MARK: - Auxiliary methods
+    //MARK: - Work with messages
     private func loadMessages() {
         networkServise.loadMessages { (message, error) in
             if let loadError = error {
@@ -112,6 +106,7 @@ class ChatVC: UIViewController {
         }
     }
     
+    //MARK: - Auxiliary methods
     private func updateInputTextView(isKeybordShow: Bool) {
         let offset = bottomInputMessageViewConstraint.constant > 0 ? 0.0 : keyboardHeight
         if isKeybordShow {
@@ -176,11 +171,7 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource {
         if networkServise.isCurrentUser(email: message.sender) {
             safeCell.configureForCurrentUser()
         } else {
-            safeCell.configureForAnotherUser()
-            let userName = message.sender
-            let endIndex = userName.index(userName.startIndex, offsetBy: 2)
-            let avatarString = userName[userName.startIndex...endIndex]
-            safeCell.leftAvatarLabel.text = avatarString.capitalized
+            safeCell.configureForAnotherUser(name: message.sender)
         }
         return safeCell
     }
@@ -189,6 +180,7 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource {
 //MARK: - UITextViewDelegate
 extension ChatVC: UITextViewDelegate {
     
+    //changing messageTextView height
     func textViewDidChange(_ textView: UITextView) {
         let size = CGSize(width: textView.frame.width, height: .infinity)
         let estimateSize = textView.sizeThatFits(size)
@@ -201,6 +193,7 @@ extension ChatVC: UITextViewDelegate {
         }
     }
     
+    //send message by pressed "Return" key
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             sendMessage()
