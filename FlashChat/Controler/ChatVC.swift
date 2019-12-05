@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import Firebase
 
 class ChatVC: UIViewController {
     
     //MARK: - Properties
-    let db = Firestore.firestore()
+    private let networkServise = NetworkService()
+    
     private var messagesArray = [Message]()
-    private var dbListener: ListenerRegistration?
     private var keyboardHeight: CGFloat = 0.0
     private var isFirstLoad = true
     
@@ -60,18 +59,18 @@ class ChatVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        dbListener?.remove()
+        networkServise.dbListener?.remove()
         NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - IBActions
     @IBAction private func actionLogOutBButton(_ sender: UIBarButtonItem) {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            navigationController?.popToRootViewController(animated: true)
-        } catch let signOutError as NSError {
-            CommonFunc.showAlertWith(message: signOutError.localizedDescription, sender: self)
+        networkServise.logOut { (isSuccessful, error) in
+            if isSuccessful {
+                self.navigationController?.popToRootViewController(animated: true)
+            } else {
+                CommonFunc.showAlertWith(message: error!.localizedDescription, sender: self)
+            }
         }
     }
     
@@ -81,54 +80,34 @@ class ChatVC: UIViewController {
     
     //MARK: - Auxiliary methods
     private func loadMessages() {
-        //TODO: implement offline access
-        dbListener = db.collection(Constant.FBase.collectionName)
-            .order(by: Constant.FBase.dateFeild)
-            .addSnapshotListener { (querySnapshot, error) in
-                if let getDocError = error {
-                    //TODO: load offline data
-                    if Auth.auth().currentUser != nil {
-                        CommonFunc.showAlertWith(
-                            message: "Check your internet connection.\n\(getDocError.localizedDescription)",
-                            sender: self)
-                    }
-                } else {
-                    guard let snapshotDocs = querySnapshot?.documentChanges else { return }
-                    for doc in snapshotDocs {
-                        let message = doc.document.data()
-                        if let messageSender = message[Constant.FBase.senderField] as? String, let messageBody = message[Constant.FBase.bodyField] as? String {
-                            self.messagesArray.append(Message(body: messageBody, sender: messageSender))
-                            self.scrollChatToDown()
-                        }
-                    }
-                }
+        networkServise.loadMessages { (message, error) in
+            if let loadError = error {
+                CommonFunc.showAlertWith(
+                    message: "Check your internet connection.\n\(loadError.localizedDescription)",
+                    sender: self)
+            } else if let message = message {
+                self.messagesArray.append(message)
+                self.scrollChatToDown()
+            }
         }
     }
     
     private func sendMessage() {
-        if let messageBody = messageTextView.text,
-            let messageSender = Auth.auth().currentUser?.email,
-            CommonFunc.isValidateString(messageBody) {
-            
-            db.collection(Constant.FBase.collectionName).addDocument(data: [
-                Constant.FBase.senderField: messageSender,
-                Constant.FBase.bodyField: messageBody,
-                Constant.FBase.dateFeild: Date().timeIntervalSince1970
-            ]) { (error) in
-                if let addDocError = error {
-                    CommonFunc.showAlertWith(
-                        message: "Message wasn't send.\n\(addDocError.localizedDescription)",
-                        sender: self)
-                } else {
-                    DispatchQueue.main.async {
-                        self.messageTextView.text = ""
-                        UIView.animate(withDuration: 0.2) {
-                            self.bottomViewHeightConstraint.constant = Constant.Constraint.defaultBottomViewHeight
-                            self.messageTextViewHeightConstraint.constant = Constant.Constraint.defaultTextViewHeight
-                            self.view.layoutIfNeeded()
-                        }
+        guard let newMessage = messageTextView.text else { return }
+        networkServise.sendMessage(string: newMessage) { (isSuccessful, error) in
+            if isSuccessful {
+                DispatchQueue.main.async {
+                    self.messageTextView.text = ""
+                    UIView.animate(withDuration: 0.2) {
+                        self.bottomViewHeightConstraint.constant = Constant.Constraint.defaultBottomViewHeight
+                        self.messageTextViewHeightConstraint.constant = Constant.Constraint.defaultTextViewHeight
+                        self.view.layoutIfNeeded()
                     }
                 }
+            } else {
+                CommonFunc.showAlertWith(
+                    message: "Message wasn't send.\n\(error!.localizedDescription)",
+                    sender: self)
             }
         }
     }
@@ -193,27 +172,18 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constant.messageCellIdentifire, for: indexPath) as? MessageCell
         guard let safeCell = cell else { return UITableViewCell() }
         let message = messagesArray[indexPath.row]
-        //appearance for current user
-        if message.sender == Auth.auth().currentUser?.email {
-            safeCell.leftAvatarView.isHidden = true
-            safeCell.rightAvaterView.isHidden = false
-            safeCell.messageLabel.textColor = Constant.Color.brandMintDarkColor
-            safeCell.messageView.backgroundColor = Constant.Color.brandMintDarkColor?.withAlphaComponent(0.1)
+        safeCell.messageLabel.text = messagesArray[indexPath.row].body
+        if networkServise.isCurrentUser(email: message.sender) {
+            safeCell.configureForCurrentUser()
         } else {
-            //appearance for another users
-            safeCell.leftAvatarView.isHidden = false
-            safeCell.rightAvaterView.isHidden = true
-            safeCell.messageView.backgroundColor = Constant.Color.brandMintDarkColor
-            safeCell.messageLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            safeCell.configureForAnotherUser()
             let userName = message.sender
             let endIndex = userName.index(userName.startIndex, offsetBy: 2)
             let avatarString = userName[userName.startIndex...endIndex]
             safeCell.leftAvatarLabel.text = avatarString.capitalized
         }
-        safeCell.messageLabel.text = messagesArray[indexPath.row].body
         return safeCell
     }
-    
 }
 
 //MARK: - UITextViewDelegate
@@ -227,6 +197,7 @@ extension ChatVC: UITextViewDelegate {
         let newState = bottomViewHeightConstraint.constant - messageTextViewHeightConstraint.constant
         if oldState != newState {
             bottomViewHeightConstraint.constant += oldState
+            scrollChatToDown()
         }
     }
     
