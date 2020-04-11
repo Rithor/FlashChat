@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Google
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,22 +19,23 @@
 
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "Firestore/core/src/firebase/firestore/core/query.h"
-#include "Firestore/core/src/firebase/firestore/core/query_listener.h"
-#include "Firestore/core/src/firebase/firestore/core/sync_engine.h"
+#include "Firestore/core/src/firebase/firestore/core/sync_engine_callback.h"
 #include "Firestore/core/src/firebase/firestore/core/view_snapshot.h"
-#include "Firestore/core/src/firebase/firestore/model/types.h"
-#include "Firestore/core/src/firebase/firestore/objc/objc_class.h"
-#include "Firestore/core/src/firebase/firestore/util/nullability.h"
-#include "Firestore/core/src/firebase/firestore/util/status.h"
-#include "absl/algorithm/container.h"
+#include "Firestore/core/src/firebase/firestore/model/model_fwd.h"
+#include "Firestore/core/src/firebase/firestore/util/empty.h"
+#include "Firestore/core/src/firebase/firestore/util/status_fwd.h"
 #include "absl/types/optional.h"
 
 namespace firebase {
 namespace firestore {
 namespace core {
+
+class QueryEventSource;
+class QueryListener;
 
 /**
  * EventManager is responsible for mapping queries to query event listeners.
@@ -51,14 +52,21 @@ class EventManager : public SyncEngineCallback {
    * listen in the SyncEngine and will perform a listen if it's the first
    * QueryListener added for a query.
    *
-   * Returns the targetId of the listen call in the SyncEngine.
+   * Returns the TargetId of the listen call in the SyncEngine.
    */
   model::TargetId AddQueryListener(
       std::shared_ptr<core::QueryListener> listener);
 
-  /** Removes a previously added listener. It's a no-op if the listener is not
-   * found. */
+  /**
+   * Removes a previously added listener. It's a no-op if the listener is not
+   * found.
+   */
   void RemoveQueryListener(std::shared_ptr<core::QueryListener> listener);
+
+  void AddSnapshotsInSyncListener(
+      const std::shared_ptr<EventListener<util::Empty>>& listener);
+  void RemoveSnapshotsInSyncListener(
+      const std::shared_ptr<EventListener<util::Empty>>& listener);
 
   // Implements `QueryEventCallback`.
   void HandleOnlineStateChange(model::OnlineState online_state) override;
@@ -67,6 +75,11 @@ class EventManager : public SyncEngineCallback {
 
  private:
   /**
+   * Call all global snapshot listeners that have been set.
+   */
+  void RaiseSnapshotsInSyncEvent();
+
+  /**
    * Holds the listeners and the last received ViewSnapshot for a query being
    * tracked by EventManager.
    */
@@ -74,14 +87,7 @@ class EventManager : public SyncEngineCallback {
     model::TargetId target_id;
     std::vector<std::shared_ptr<QueryListener>> listeners;
 
-    bool Erase(const std::shared_ptr<QueryListener>& listener) {
-      auto found_iter = absl::c_find(listeners, listener);
-      auto found = found_iter != listeners.end();
-      if (found) {
-        listeners.erase(found_iter);
-      }
-      return found;
-    }
+    bool Erase(const std::shared_ptr<QueryListener>& listener);
 
     const absl::optional<ViewSnapshot>& view_snapshot() const {
       return snapshot_;
@@ -100,6 +106,8 @@ class EventManager : public SyncEngineCallback {
   QueryEventSource* query_event_source_ = nullptr;
   model::OnlineState online_state_ = model::OnlineState::Unknown;
   std::unordered_map<core::Query, QueryListenersInfo> queries_;
+  std::unordered_set<std::shared_ptr<EventListener<util::Empty>>>
+      snapshots_in_sync_listeners_;
 };
 
 }  // namespace core

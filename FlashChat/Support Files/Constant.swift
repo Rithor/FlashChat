@@ -10,6 +10,8 @@ import UIKit
 
 struct Constant {
     
+    private init() {}
+    
     static let appName = "FlashChat"
     static let appNameWithLogo = "⚡️FlashChat"
     static let appLogo = "⚡️"

@@ -23,6 +23,7 @@
 
 #include "Firestore/core/include/firebase/firestore/timestamp.h"
 #include "Firestore/core/src/firebase/firestore/api/settings.h"
+#include "Firestore/core/src/firebase/firestore/local/target_data.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/util/log.h"
 
@@ -63,8 +64,8 @@ class RollingSequenceNumberBuffer {
     if (queue_.size() < max_elements_) {
       queue_.push(sequence_number);
     } else {
-      ListenSequenceNumber highestValue = queue_.top();
-      if (sequence_number < highestValue) {
+      ListenSequenceNumber highest_value = queue_.top();
+      if (sequence_number < highest_value) {
         queue_.pop();
         queue_.push(sequence_number);
       }
@@ -96,9 +97,9 @@ LruParams LruParams::Disabled() {
   return LruParams{api::Settings::CacheSizeUnlimited, 0, 0};
 }
 
-LruParams LruParams::WithCacheSize(int64_t cacheSize) {
+LruParams LruParams::WithCacheSize(int64_t cache_size) {
   LruParams params = Default();
-  params.min_bytes_threshold = cacheSize;
+  params.min_bytes_threshold = cache_size;
   return params;
 }
 
@@ -181,12 +182,12 @@ ListenSequenceNumber LruGarbageCollector::SequenceNumberForQueryCount(
 
   RollingSequenceNumberBuffer buffer(query_count);
 
-  delegate_->EnumerateTargets([&buffer](const QueryData& queryData) {
-    buffer.AddElement(queryData.sequence_number());
+  delegate_->EnumerateTargets([&buffer](const TargetData& target_data) {
+    buffer.AddElement(target_data.sequence_number());
   });
 
   delegate_->EnumerateOrphanedDocuments(
-      [&buffer](const DocumentKey& docKey,
+      [&buffer](const DocumentKey& doc_key,
                 ListenSequenceNumber sequence_number) {
         buffer.AddElement(sequence_number);
       });

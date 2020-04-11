@@ -95,7 +95,7 @@ class ChatVC: UIViewController {
                     UIView.animate(withDuration: 0.2) {
                         self.bottomViewHeightConstraint.constant = Constant.Constraint.defaultBottomViewHeight
                         self.messageTextViewHeightConstraint.constant = Constant.Constraint.defaultTextViewHeight
-                        self.view.layoutIfNeeded()
+                        self.view.setNeedsLayout()
                     }
                 }
             } else {
@@ -117,7 +117,7 @@ class ChatVC: UIViewController {
         } else {
             bottomInputMessageViewConstraint.constant -= keyboardHeight
         }
-        view.layoutIfNeeded()
+        view.setNeedsLayout()
     }
     
     private func scrollChatToDown() {
@@ -187,9 +187,11 @@ extension ChatVC: UITextViewDelegate {
         let oldState = bottomViewHeightConstraint.constant - messageTextViewHeightConstraint.constant
         messageTextViewHeightConstraint.constant = estimateSize.height
         let newState = bottomViewHeightConstraint.constant - messageTextViewHeightConstraint.constant
-        if oldState != newState {
+        if oldState > newState {
             bottomViewHeightConstraint.constant += oldState
             scrollChatToDown()
+        } else if oldState < newState {
+            bottomViewHeightConstraint.constant -= oldState
         }
     }
     

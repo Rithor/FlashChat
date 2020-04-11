@@ -66,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				1D5AC8EA238966A7001B61A1 /* Message.swift */,
-				1DBF86F9239910DE009BF353 /* NetworkService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -94,6 +93,7 @@
 			children = (
 				1DB1B2922382B302007B24B6 /* AppDelegate.swift */,
 				1DB1B2942382B302007B24B6 /* SceneDelegate.swift */,
+				1DC025CC2441F9B300D90A7C /* Services */,
 				1D5AC8E72389667D001B61A1 /* Model */,
 				1DB1B2A62382B35A007B24B6 /* View */,
 				1DB1B2A92382B37D007B24B6 /* Controler */,
@@ -134,6 +134,14 @@
 				1DB1B2AB2382B3FB007B24B6 /* .gitignore */,
 			);
 			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		1DC025CC2441F9B300D90A7C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1DBF86F9239910DE009BF353 /* NetworkService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		2AEE52890F3A2836B875F875 /* Frameworks */ = {
@@ -460,7 +468,7 @@
 				1DB1B2A22382B305007B24B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		1DB1B2A32382B305007B24B6 /* Build configuration list for PBXNativeTarget "FlashChat" */ = {
 			isa = XCConfigurationList;
@@ -469,7 +477,7 @@
 				1DB1B2A52382B305007B24B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
