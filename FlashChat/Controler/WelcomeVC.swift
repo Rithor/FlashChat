@@ -86,11 +86,13 @@ class WelcomeVC: UIViewController {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.backgroundColor = UIColor.clear
+        navBarAppearance.shadowColor = .clear
         navBarAppearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title2)
         ]
         navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationController?.navigationBar.isHidden = true
     }
     
