@@ -11,6 +11,6 @@
 
 ![mainScreen](mainScreen.gif)
 
-![keybordAppear](keybord appear.gif)
+![keybordAppear](keybordAppear.gif)
 
 ![textView](textView.gif)
