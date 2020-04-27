@@ -26,19 +26,7 @@ class ChatVC: UIViewController {
     //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.hidesBackButton = true
-        
-        messageTextView.layer.cornerRadius = 5
-        messageTextView.isScrollEnabled = false
-        
-        messagesTableView.separatorStyle = .none
-        messagesTableView.register(UINib(nibName: "MessageCell", bundle: nil),
-                                   forCellReuseIdentifier: Constant.messageCellIdentifire)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
-        messagesTableView.addGestureRecognizer(tapGesture)
-        
+        setupUI()
         loadMessages()
     }
     
@@ -107,6 +95,20 @@ class ChatVC: UIViewController {
     }
     
     //MARK: - Auxiliary methods
+    fileprivate func setupUI() {
+        navigationItem.hidesBackButton = true
+        
+        messageTextView.layer.cornerRadius = 5
+        messageTextView.isScrollEnabled = false
+        
+        messagesTableView.separatorStyle = .none
+        messagesTableView.register(UINib(nibName: "MessageCell", bundle: nil),
+                                   forCellReuseIdentifier: Constant.messageCellIdentifire)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
+        messagesTableView.addGestureRecognizer(tapGesture)
+    }
+    
     private func updateInputTextView(isKeybordShow: Bool) {
         let offset = bottomInputMessageViewConstraint.constant > 0 ? 0.0 : keyboardHeight
         if isKeybordShow {
@@ -122,7 +124,7 @@ class ChatVC: UIViewController {
     
     private func scrollChatToDown() {
         guard messagesArray.count > 1 else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             self.messagesTableView.reloadData()
             let lastIndex = IndexPath(row: self.messagesArray.count - 1, section: 0)
             self.messagesTableView.scrollToRow(at: lastIndex,
@@ -146,11 +148,12 @@ class ChatVC: UIViewController {
     
     @objc private func keyboardWillDisappear(_ notification: Notification) {
         updateInputTextView(isKeybordShow: false)
-        messagesTableView.reloadData()
+        scrollChatToDown()
     }
     
     //MARK: - GestureRecognizer func
     @objc private func tableViewTapped() {
+        scrollChatToDown()
         messageTextView.resignFirstResponder()
     }
     
